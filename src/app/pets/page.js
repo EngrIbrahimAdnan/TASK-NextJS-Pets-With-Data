@@ -1,11 +1,8 @@
-import pets from "@/data/pets";
-
+import { fetchingPets } from "@/actions";
 import PetsContainer from "./components/PetsContainer";
 
-function PetsPage() {
-  return (
-    <PetsContainer pets={pets} />
-  );
-};
+export default async function PetsPage() {
+  const pets = await fetchingPets();
 
-export default PetsPage;
+  return <PetsContainer pets={pets} />;
+}
