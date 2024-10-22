@@ -1,5 +1,7 @@
 "use server";
 
+import { redirect } from "next/navigation";
+
 export async function fetchingPets() {
   const response = await fetch(
     "https://pets-react-query-backend.eapi.joincoded.com/pets"
@@ -8,10 +10,18 @@ export async function fetchingPets() {
   return pets;
 }
 
-// export async function fetchingPetDetail() {
-//   const response = await fetch(
-//     `https://pets-react-query-backend.eapi.joincoded.com/pets/${id}`
-//   );
-//   const petDetail = await response.json();
-//   return petDetail;
-// }
+export async function fetchingPetDetail(id) {
+  let pet;
+
+  const response = await fetch(
+    `https://pets-react-query-backend.eapi.joincoded.com/pets/${id}`
+  );
+  try {
+    pet = await response.json();
+  } catch (error) {
+    console.error("Doesnt exist");
+    redirect("/pets");
+  }
+
+  return pet;
+}
